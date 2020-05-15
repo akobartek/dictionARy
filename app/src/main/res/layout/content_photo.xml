@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.PhotoActivity">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/detectObjectBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="sans-serif"
+        android:padding="12dp"
+        android:text="@string/detect_object"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:textColor="@color/colorBackground"
+        app:backgroundTint="@color/colorAccent"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/colorPrimaryDark" />
+
+    <ImageButton
+        android:id="@+id/openTranslationBottomSheetBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/cd_open_translation_btn"
+        android:padding="4dp"
+        android:src="@drawable/ic_translation"
+        app:layout_constraintBottom_toBottomOf="@+id/detectObjectBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/detectObjectBtn"
+        app:layout_constraintTop_toTopOf="@+id/detectObjectBtn" />
+
+    <ImageView
+        android:id="@+id/photoThumbnail"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/cd_latest_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/detectObjectBtn"
+        app:layout_constraintEnd_toStartOf="@+id/detectObjectBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/detectObjectBtn"
+        tools:src="@tools:sample/avatars" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:background="@drawable/top_action_bar_scrim"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
+
+    <ImageView
+        android:id="@+id/closeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:contentDescription="@string/cd_close_activity_btn"
+        android:padding="12dp"
+        app:srcCompat="@drawable/ic_close" />
+
+    <ImageView
+        android:id="@+id/flashBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/cd_flash_btn"
+        android:padding="12dp"
+        app:srcCompat="@drawable/ic_camera_flash" />
+
+</RelativeLayout>
