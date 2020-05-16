@@ -43,6 +43,11 @@
     <!-- DICTIONARY STRINGS -->
     <string name="dictionary">Dictionary</string>
     <string name="word_search">Search for word or translation</string>
+    <string name="select_language_dialog_title">Choose the language you want to learn:</string>
+    <string name="language_es">Spanish</string>
+    <string name="language_fr">French</string>
+    <string name="language_it">Italian</string>
+    <string name="language_en">English</string>
 
     <!-- TEST STRINGS -->
     <string name="tests">Tests</string>

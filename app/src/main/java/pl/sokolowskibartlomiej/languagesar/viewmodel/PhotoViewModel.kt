@@ -17,6 +17,8 @@ import pl.sokolowskibartlomiej.languagesar.apicalls.translate.TranslateRepositor
 import pl.sokolowskibartlomiej.languagesar.db.entities.DetectedObject
 import pl.sokolowskibartlomiej.languagesar.model.repositories.WordsRepository
 import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PhotoViewModel(val app: Application) : AndroidViewModel(app) {
 
@@ -29,11 +31,10 @@ class PhotoViewModel(val app: Application) : AndroidViewModel(app) {
     var selectedLabel = 0
 
     fun fetchLabelsTranslation(labels: ArrayList<String>) {
-        val text = labels.joinToString(", ").toLowerCase()
+        val text = labels.joinToString(", ").toLowerCase(Locale.getDefault())
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val userLangCode =
-                    ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0].language
+                val userLangCode = PreferencesManager.getUserLanguage()
                 val userTranslation =
                     if (userLangCode.contains("en")) text
                     else mTranslateRepository.translateText(text, "en", userLangCode)

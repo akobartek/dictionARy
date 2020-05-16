@@ -1,6 +1,8 @@
 package pl.sokolowskibartlomiej.languagesar.utils
 
 import android.content.SharedPreferences
+import android.content.res.Resources
+import androidx.core.os.ConfigurationCompat
 import androidx.preference.PreferenceManager
 import pl.sokolowskibartlomiej.languagesar.LanguagesARApplication
 
@@ -19,8 +21,10 @@ object PreferencesManager {
             .apply()
     }
 
-    // TODO() -> Set default language to ""
-    fun getSelectedLanguage() = sharedPref.getString(SELECTED_LANGUAGE, "it")!!
+    fun getUserLanguage(): String =
+        ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0].language
+
+    fun getSelectedLanguage() = sharedPref.getString(SELECTED_LANGUAGE, "")!!
 
     fun setSelectedLanguage(newValue: String) {
         sharedPref.edit()

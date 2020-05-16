@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav_graph"
-    app:startDestination="@layout/fragment_dictionary">
+    app:startDestination="@+id/dictionaryFragment">
 
     <fragment
         android:id="@+id/dictionaryFragment"

@@ -7,7 +7,7 @@
     android:background="@color/colorBackground"
     tools:context=".view.activities.MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/navHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
@@ -17,7 +17,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/app_nav_graph" />
+        app:navGraph="@navigation/app_nav_graph"
+        tools:ignore="FragmentTagUsage" />
 
     <View
         android:id="@+id/border"

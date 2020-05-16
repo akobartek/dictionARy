@@ -8,7 +8,7 @@
     android:paddingEnd="16dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/labelsRecyclerView"
+        android:id="@+id/dialogRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"

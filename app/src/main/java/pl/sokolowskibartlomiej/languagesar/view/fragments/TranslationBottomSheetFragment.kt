@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.dialog_detected_objects.view.*
+import kotlinx.android.synthetic.main.dialog_list.view.*
 import kotlinx.android.synthetic.main.fragment_translation_bottom_sheet.view.*
 import pl.sokolowskibartlomiej.languagesar.R
 import pl.sokolowskibartlomiej.languagesar.utils.GlideApp
@@ -35,10 +35,10 @@ class TranslationBottomSheetFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         GlideApp.with(this@TranslationBottomSheetFragment)
-            .load("https://www.countryflags.io/${ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0].country}/flat/24.png")
+            .load("https://www.countryflags.io/${ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0].country}/flat/48.png")
             .into(view.sourceFlag)
         GlideApp.with(this@TranslationBottomSheetFragment)
-            .load("https://www.countryflags.io/${PreferencesManager.getSelectedLanguage()}/flat/24.png")
+            .load("https://www.countryflags.io/${PreferencesManager.getSelectedLanguage()}/flat/48.png")
             .into(view.targetFlag)
 
         mLabelsRecyclerAdapter = LabelsRecyclerAdapter()
@@ -69,9 +69,9 @@ class TranslationBottomSheetFragment : Fragment() {
     @SuppressLint("InflateParams")
     private fun showDetectedObjectsDialog() {
         val dialogView =
-            LayoutInflater.from(context).inflate(R.layout.dialog_detected_objects, null)
+            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_list, null)
         mLabelsRecyclerAdapter.setSelectedLabel(mViewModel.selectedLabel)
-        dialogView.labelsRecyclerView.apply {
+        dialogView.dialogRecyclerView.apply {
             layoutManager = LinearLayoutManager(dialogView.context)
             itemAnimator = DefaultItemAnimator()
             adapter = mLabelsRecyclerAdapter
