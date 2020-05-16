@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav_graph"
+    app:startDestination="@layout/fragment_dictionary">
+
+    <fragment
+        android:id="@+id/dictionaryFragment"
+        android:name="pl.sokolowskibartlomiej.languagesar.view.fragments.DictionaryFragment"
+        tools:layout="@layout/fragment_dictionary">
+
+        <action
+            android:id="@+id/showTestFragment"
+            app:destination="@+id/testFragment"
+            app:enterAnim="@anim/slide_in_left" />
+        <action
+            android:id="@+id/showSettingsFragment"
+            app:destination="@+id/settingsFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:popEnterAnim="@anim/slide_in_top" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="pl.sokolowskibartlomiej.languagesar.view.fragments.TestFragment"
+        tools:layout="@layout/fragment_test">
+
+        <action
+            android:id="@+id/showDictionaryFragment"
+            app:destination="@+id/dictionaryFragment"
+            app:enterAnim="@anim/slide_in_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="pl.sokolowskibartlomiej.languagesar.view.fragments.SettingsFragment"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

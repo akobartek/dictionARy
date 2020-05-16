@@ -9,6 +9,7 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="loading">Loading…</string>
+    <string name="press_to_exit">Press once again to exit!</string>
     <string name="no_internet_title">No internet connection</string>
     <string name="no_internet_reconnect_message">An error with connection occurred, do you want to try again?</string>
     <string name="permission_error_title">Permissions not granted!</string>
@@ -20,6 +21,7 @@
     <string name="night_mode_summary">Turn on night mode in the app</string>
 
     <!-- PHOTOS OBJECT DETECTION -->
+    <string name="ar">AR</string>
     <string name="detect_object">Detect object</string>
     <string name="cd_open_translation_btn">Results of translation</string>
     <string name="cd_latest_photo">Latest photo thumbnail</string>
@@ -37,5 +39,12 @@
     <string name="word_saved">Word saved in database!</string>
     <string name="other_detected_objects">Other detected objects</string>
     <string name="apply">Apply</string>
+
+    <!-- DICTIONARY STRINGS -->
+    <string name="dictionary">Dictionary</string>
+    <string name="word_search">Search for word or translation</string>
+
+    <!-- TEST STRINGS -->
+    <string name="tests">Tests</string>
 
 </resources>

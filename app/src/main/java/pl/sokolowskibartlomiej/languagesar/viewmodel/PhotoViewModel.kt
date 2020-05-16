@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import pl.sokolowskibartlomiej.languagesar.BuildConfig
 import pl.sokolowskibartlomiej.languagesar.apicalls.RetrofitClient
 import pl.sokolowskibartlomiej.languagesar.apicalls.translate.TranslateRepository
-import pl.sokolowskibartlomiej.languagesar.db.entities.DetectedObjectEntity
+import pl.sokolowskibartlomiej.languagesar.db.entities.DetectedObject
 import pl.sokolowskibartlomiej.languagesar.model.repositories.WordsRepository
 import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
 
@@ -51,7 +51,7 @@ class PhotoViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun insertWord() {
-        val wordEntity = DetectedObjectEntity(
+        val wordEntity = DetectedObject(
             label = objectsLabels.value!![selectedLabel],
             sourceLang = ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0].language,
             sourceTranslation = translation.value!!.first.split(", ")[selectedLabel],

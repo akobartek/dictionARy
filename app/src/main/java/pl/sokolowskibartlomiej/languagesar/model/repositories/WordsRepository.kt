@@ -2,31 +2,35 @@ package pl.sokolowskibartlomiej.languagesar.model.repositories
 
 import android.app.Application
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
 import pl.sokolowskibartlomiej.languagesar.db.WordsDatabase
 import pl.sokolowskibartlomiej.languagesar.db.daos.WordsDao
-import pl.sokolowskibartlomiej.languagesar.db.entities.DetectedObjectEntity
+import pl.sokolowskibartlomiej.languagesar.db.entities.DetectedObject
+import pl.sokolowskibartlomiej.languagesar.db.entities.DictionaryWord
 
 class WordsRepository(application: Application) {
 
-    private var mWordsDao: WordsDao
-    private var mAllWords: LiveData<List<DetectedObjectEntity>>
+    private var mWordsDao: WordsDao = WordsDatabase.getInstance(application)!!.wordsDao()
 
-    init {
-        val db = WordsDatabase.getInstance(application)!!
-        mWordsDao = db.wordsDao()
-        mAllWords = mWordsDao.getAllDetectedObjects()
-    }
-
-    fun getAllDetectedObjects(): LiveData<List<DetectedObjectEntity>> = mAllWords
-
-    fun getObjectsByTargetLang(targetLang: String) = mWordsDao.getObjectsByTargetLang(targetLang)
+    fun getObjectsByTargetLang(targetLang: String) =
+        mWordsDao.getObjectsByTargetLang(targetLang)
 
     @WorkerThread
-    suspend fun insertDetectedObject(detectedObject: DetectedObjectEntity) =
+    suspend fun insertDetectedObject(detectedObject: DetectedObject) =
         mWordsDao.insertDetectedObject(detectedObject)
 
     @WorkerThread
-    suspend fun deleteDetectedObject(detectedObject: DetectedObjectEntity) =
+    suspend fun deleteDetectedObject(detectedObject: DetectedObject) =
         mWordsDao.deleteDetectedObject(detectedObject)
+
+    fun getWordsByLanguage(language: String) =
+        mWordsDao.getWordsByLanguage(language)
+
+    @WorkerThread
+    suspend fun insertWord(word: DictionaryWord) = mWordsDao.insertWord(word)
+
+    @WorkerThread
+    suspend fun updateWord(word: DictionaryWord) = mWordsDao.updateWord(word)
+
+    @WorkerThread
+    suspend fun deleteWord(word: DictionaryWord) = mWordsDao.deleteWord(word)
 }
