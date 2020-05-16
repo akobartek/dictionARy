@@ -2,30 +2,23 @@ package pl.sokolowskibartlomiej.languagesar.db.daos
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import pl.sokolowskibartlomiej.languagesar.db.entities.DetectedObject
-import pl.sokolowskibartlomiej.languagesar.db.entities.DictionaryWord
+import pl.sokolowskibartlomiej.languagesar.db.entities.Word
 
 @Dao
 interface WordsDao {
 
-    @Query("SELECT * FROM detected_objects_table WHERE target_lang = :targetLang")
-    fun getObjectsByTargetLang(targetLang: String): LiveData<List<DetectedObject>>
+    @Query("SELECT * FROM words_table WHERE language = :language")
+    fun getWordsByLanguage(language: String): LiveData<List<Word>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDetectedObject(detectedObject: DetectedObject): Long
-
-    @Delete
-    suspend fun deleteDetectedObject(detectedObject: DetectedObject): Int
-
-    @Query("SELECT * FROM dictionary_words_table WHERE language = :language")
-    fun getWordsByLanguage(language: String): LiveData<List<DictionaryWord>>
+    suspend fun insertWord(word: Word)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWord(word: DictionaryWord): Long
+    suspend fun insertMultipleWords(vararg words: Word)
 
     @Update
-    suspend fun updateWord(word: DictionaryWord): Int
+    suspend fun updateWord(word: Word)
 
     @Delete
-    suspend fun deleteWord(word: DictionaryWord): Int
+    suspend fun deleteWord(word: Word)
 }

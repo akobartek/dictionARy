@@ -26,9 +26,17 @@ object PreferencesManager {
 
     fun getSelectedLanguage() = sharedPref.getString(SELECTED_LANGUAGE, "")!!
 
-    fun setSelectedLanguage(newValue: String) {
+    fun setSelectedLanguage(languageCode: String) {
         sharedPref.edit()
-            .putString(SELECTED_LANGUAGE, newValue)
+            .putString(SELECTED_LANGUAGE, languageCode)
+            .apply()
+    }
+
+    fun areWordsInDatabase() = sharedPref.getBoolean("words_$${getSelectedLanguage()}", false)
+
+    fun wordsAddedToDatabase() {
+        sharedPref.edit()
+            .putBoolean("words_$${getSelectedLanguage()}", true)
             .apply()
     }
 }

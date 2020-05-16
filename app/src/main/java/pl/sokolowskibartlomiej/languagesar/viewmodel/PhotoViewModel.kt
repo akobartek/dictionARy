@@ -1,10 +1,8 @@
 package pl.sokolowskibartlomiej.languagesar.viewmodel
 
 import android.app.Application
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.util.Log
-import androidx.core.os.ConfigurationCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,11 +12,10 @@ import kotlinx.coroutines.launch
 import pl.sokolowskibartlomiej.languagesar.BuildConfig
 import pl.sokolowskibartlomiej.languagesar.apicalls.RetrofitClient
 import pl.sokolowskibartlomiej.languagesar.apicalls.translate.TranslateRepository
-import pl.sokolowskibartlomiej.languagesar.db.entities.DetectedObject
+import pl.sokolowskibartlomiej.languagesar.db.entities.Word
 import pl.sokolowskibartlomiej.languagesar.model.repositories.WordsRepository
 import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
 import java.util.*
-import kotlin.collections.ArrayList
 
 class PhotoViewModel(val app: Application) : AndroidViewModel(app) {
 
@@ -52,13 +49,13 @@ class PhotoViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun insertWord() {
-        val wordEntity = DetectedObject(
-            label = objectsLabels.value!![selectedLabel],
-            sourceLang = ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0].language,
-            sourceTranslation = translation.value!!.first.split(", ")[selectedLabel],
-            targetLang = PreferencesManager.getSelectedLanguage(),
-            targetTranslation = translation.value!!.second.split(", ")[selectedLabel]
+        val sourceText = translation.value!!.first.split(", ")[selectedLabel]
+        val translation = translation.value!!.second.split(", ")[selectedLabel]
+        val word = Word(
+            word = "$translation - $sourceText - $sourceText",
+            language = PreferencesManager.getSelectedLanguage(),
+            status = 1
         )
-        viewModelScope.launch(Dispatchers.IO) { mDatabaseRepository.insertDetectedObject(wordEntity) }
+        viewModelScope.launch(Dispatchers.IO) { mDatabaseRepository.insertWord(word) }
     }
 }

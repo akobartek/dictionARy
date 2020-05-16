@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".view.fragments.DictionaryFragment">
 
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/dictionaryAppBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="xd" />
+        android:layout_height="wrap_content"
+        android:background="@color/colorBackground"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-</FrameLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/dictionaryToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorBackground"
+            app:layout_scrollFlags="enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="@string/dictionary"
+            app:titleTextColor="@color/colorMenuIcons" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_dictionary" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addWordBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/ic_plus"
+        app:backgroundTint="@color/colorAccent"
+        app:borderWidth="0dp"
+        app:fabSize="normal"
+        app:tint="@color/colorBackground" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
