@@ -39,4 +39,15 @@
         app:borderWidth="0dp"
         app:fabSize="normal"
         app:tint="@color/colorBackground" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/filtersBottomSheet"
+        android:name="pl.sokolowskibartlomiej.languagesar.view.fragments.FiltersBottomSheetFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
+        android:elevation="100dp"
+        app:behavior_hideable="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        tools:layout="@layout/fragment_translation_bottom_sheet" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

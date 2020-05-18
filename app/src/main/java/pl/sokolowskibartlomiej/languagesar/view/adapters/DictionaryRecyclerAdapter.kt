@@ -13,7 +13,9 @@ import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
 import java.util.*
 import kotlin.collections.ArrayList
 
-class DictionaryRecyclerAdapter(val emptyView: View, val showPopupMenu: (Word, View) -> Unit) :
+class DictionaryRecyclerAdapter(
+    val emptyView: View, val showPopup: (Word, View) -> Unit, val speakWord: (Word, View) -> Unit
+) :
     RecyclerView.Adapter<DictionaryRecyclerAdapter.WordViewHolder>(), Filterable {
 
     private var mWords = listOf<Word>()
@@ -57,10 +59,17 @@ class DictionaryRecyclerAdapter(val emptyView: View, val showPopupMenu: (Word, V
         }
     }
 
-    fun setWordsList(list: List<Word>) {
+    fun setWordsList(list: List<Word>, filters: String) {
         mWords = list
-        mWordsFiltered = list
+        mWordsFiltered = list.filter { filters.contains(it.status.toString()) }
         notifyDataSetChanged()
+        emptyView.visibility = if (mWordsFiltered.isEmpty()) View.VISIBLE else View.INVISIBLE
+    }
+
+    fun setStatusFilters(filters: String) {
+        mWordsFiltered = mWords.filter { filters.contains(it.status.toString()) }
+        notifyDataSetChanged()
+        emptyView.visibility = if (mWordsFiltered.isEmpty()) View.VISIBLE else View.INVISIBLE
     }
 
 
@@ -70,7 +79,9 @@ class DictionaryRecyclerAdapter(val emptyView: View, val showPopupMenu: (Word, V
             itemView.translationTV.text =
                 word.word.split(" - ")[if (PreferencesManager.getUserLanguage() == "pl") 1 else 2]
 
-            itemView.taskOptionsBtn.setOnClickListener { showPopupMenu(word, it) }
+            itemView.wordOptionsBtn.setOnClickListener { showPopup(word, it) }
+
+            itemView.wordSoundBtn.setOnClickListener { speakWord(word, it) }
         }
     }
 }

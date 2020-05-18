@@ -24,5 +24,4 @@
         app:behavior_hideable="true"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         tools:layout="@layout/fragment_translation_bottom_sheet" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -26,6 +26,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences)
 
+        // TODO() -> Change language
+
         preferenceManager
             .findPreference<Preference>(getString(R.string.night_mode_key))
             ?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->

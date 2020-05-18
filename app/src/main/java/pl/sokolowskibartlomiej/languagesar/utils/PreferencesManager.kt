@@ -3,6 +3,7 @@ package pl.sokolowskibartlomiej.languagesar.utils
 import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.core.os.ConfigurationCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import pl.sokolowskibartlomiej.languagesar.LanguagesARApplication
 
@@ -10,6 +11,7 @@ object PreferencesManager {
 
     private const val NIGHT_MODE = "night_mode"
     private const val SELECTED_LANGUAGE = "selected_language"
+    private const val FILTERS = "filters"
     private val sharedPref: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(LanguagesARApplication.instance)
 
@@ -30,6 +32,17 @@ object PreferencesManager {
         sharedPref.edit()
             .putString(SELECTED_LANGUAGE, languageCode)
             .apply()
+    }
+
+    val filtersLiveData = MutableLiveData(getFilters())
+
+    fun getFilters() = sharedPref.getString(FILTERS, "1, 2, 0")!!
+
+    fun setFilters(newFilters: String) {
+        sharedPref.edit()
+            .putString(FILTERS, newFilters)
+            .apply()
+        filtersLiveData.postValue(newFilters)
     }
 
     fun areWordsInDatabase() = sharedPref.getBoolean("words_$${getSelectedLanguage()}", false)

@@ -53,15 +53,15 @@ class PhotoActivity : AppCompatActivity() {
     private var mRotation = 0f
 
     private lateinit var mPhotoViewModel: PhotoViewModel
-    private lateinit var cameraExecutor: ExecutorService
+    private lateinit var mCameraExecutor: ExecutorService
     private lateinit var mLoadingDialog: AlertDialog
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<*>
 
-    private val displayManager by lazy {
+    private val mDisplayManager by lazy {
         getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
     }
 
-    private val displayListener = object : DisplayManager.DisplayListener {
+    private val mDisplayListener = object : DisplayManager.DisplayListener {
         override fun onDisplayAdded(displayId: Int) = Unit
         override fun onDisplayRemoved(displayId: Int) = Unit
         override fun onDisplayChanged(displayId: Int) {
@@ -76,8 +76,8 @@ class PhotoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_photo)
 
         mPhotoViewModel = ViewModelProvider(this@PhotoActivity).get(PhotoViewModel::class.java)
-        cameraExecutor = Executors.newSingleThreadExecutor()
-        displayManager.registerDisplayListener(displayListener, null)
+        mCameraExecutor = Executors.newSingleThreadExecutor()
+        mDisplayManager.registerDisplayListener(mDisplayListener, null)
         mBottomSheetBehavior = from(translationBottomSheet)
         mBottomSheetBehavior.state = STATE_HIDDEN
         mLoadingDialog = AlertDialog.Builder(this@PhotoActivity)
@@ -114,7 +114,7 @@ class PhotoActivity : AppCompatActivity() {
         detectObjectBtn.setOnClickListener {
             mLoadingDialog.show()
             mImageCapture?.takePicture(
-                cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
+                mCameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
                     @SuppressLint("UnsafeExperimentalUsageError")
                     override fun onCaptureSuccess(image: ImageProxy) {
                         image.use {
@@ -183,8 +183,8 @@ class PhotoActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        cameraExecutor.shutdown()
-        displayManager.unregisterDisplayListener(displayListener)
+        mCameraExecutor.shutdown()
+        mDisplayManager.unregisterDisplayListener(mDisplayListener)
     }
 
     override fun onBackPressed() {

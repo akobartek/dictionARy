@@ -3,10 +3,15 @@ package pl.sokolowskibartlomiej.languagesar.view.fragments
 import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -16,21 +21,29 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import kotlinx.android.synthetic.main.content_dictionary.view.*
 import kotlinx.android.synthetic.main.dialog_list.view.*
 import kotlinx.android.synthetic.main.fragment_dictionary.view.*
+import pl.sokolowskibartlomiej.languagesar.BuildConfig
 import pl.sokolowskibartlomiej.languagesar.R
 import pl.sokolowskibartlomiej.languagesar.db.entities.Word
 import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
 import pl.sokolowskibartlomiej.languagesar.view.adapters.DictionaryRecyclerAdapter
 import pl.sokolowskibartlomiej.languagesar.view.adapters.LanguageRecyclerAdapter
 import pl.sokolowskibartlomiej.languagesar.viewmodel.DictionaryViewModel
+import java.util.*
 
 class DictionaryFragment : Fragment() {
 
     private lateinit var mViewModel: DictionaryViewModel
     private lateinit var mAdapter: DictionaryRecyclerAdapter
     private lateinit var mSearchView: SearchView
+    private lateinit var mFiltersBottomSheetBehavior: BottomSheetBehavior<*>
+    private lateinit var mTextToSpeech: TextToSpeech
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -40,14 +53,42 @@ class DictionaryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         inflateToolbarMenu(view.dictionaryToolbar)
 
-        mAdapter = DictionaryRecyclerAdapter(view.emptyDictionaryView, ::showWordPopupMenu)
+        mAdapter =
+            DictionaryRecyclerAdapter(view.emptyDictionaryView, ::showWordPopupMenu, ::speakWord)
         view.dictionaryRecyclerView.apply {
             layoutManager = LinearLayoutManager(view.context)
             itemAnimator = DefaultItemAnimator()
             adapter = mAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy < 0 && !view.addWordBtn.isShown)
+                        view.addWordBtn.show()
+                    else if (dy > 0 && view.addWordBtn.isShown)
+                        view.addWordBtn.hide()
+                }
+            })
         }
+        mFiltersBottomSheetBehavior = BottomSheetBehavior.from(view.filtersBottomSheet)
+        mFiltersBottomSheetBehavior.state = STATE_HIDDEN
 
         mViewModel = ViewModelProvider(this@DictionaryFragment).get(DictionaryViewModel::class.java)
+
+        PreferencesManager.filtersLiveData.observe(viewLifecycleOwner, Observer {
+            mAdapter.setStatusFilters(it)
+            Log.d("filters", it)
+        })
+
+        view.addWordBtn.setOnClickListener {
+            // TODO() -> Show bottom sheet
+        }
+
+        mTextToSpeech = TextToSpeech(context, TextToSpeech.OnInitListener { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                mTextToSpeech.language = Locale(PreferencesManager.getSelectedLanguage())
+                mTextToSpeech.setSpeechRate(0.9f)
+            } else if (BuildConfig.DEBUG) Log.e("TextToSpeech", "Initialization failed!")
+        })
     }
 
     override fun onResume() {
@@ -56,21 +97,60 @@ class DictionaryFragment : Fragment() {
         else fetchDictionary()
     }
 
+    override fun onStop() {
+        if (mTextToSpeech.isSpeaking) {
+            mTextToSpeech.stop()
+            mTextToSpeech.shutdown()
+        }
+        super.onStop()
+    }
+
     fun onBackPressed(): Boolean {
         return if (!mSearchView.isIconified) {
             mSearchView.onActionViewCollapsed()
+            false
+        } else if (::mFiltersBottomSheetBehavior.isInitialized && mFiltersBottomSheetBehavior.state != STATE_HIDDEN) {
+            mFiltersBottomSheetBehavior.state = STATE_HIDDEN
             false
         } else true
     }
 
     private fun fetchDictionary() {
         mViewModel.getWordsFromDatabase().observe(viewLifecycleOwner, Observer { words ->
-            mAdapter.setWordsList(words)
+            mAdapter.setWordsList(
+                words.sortedWith(
+                    compareBy({ -it.status }, { it.word.toLowerCase(Locale.getDefault()) })
+                ),
+                PreferencesManager.getFilters()
+            )
             view?.dictionaryRecyclerView?.scheduleLayoutAnimation()
             view?.dictionaryLoadingIndicator?.hide()
-            view?.emptyDictionaryView?.visibility =
-                if (words.isEmpty()) View.VISIBLE else View.INVISIBLE
         })
+    }
+
+    private fun speakWord(word: Word, button: View) {
+        var drawable = requireContext().getDrawable(
+            if (mTextToSpeech.isSpeaking) R.drawable.anim_pause_to_sound else R.drawable.anim_sound_to_pause
+        )
+        (button as ImageButton).setImageDrawable(drawable)
+        (drawable as AnimatedVectorDrawable).start()
+
+        mTextToSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+            override fun onDone(utteranceId: String?) {
+                drawable = requireContext().getDrawable(R.drawable.anim_pause_to_sound)
+                button.setImageDrawable(drawable)
+                (drawable as AnimatedVectorDrawable).start()
+            }
+
+            override fun onError(utteranceId: String?) {}
+            override fun onStart(utteranceId: String?) {}
+        })
+
+        if (mTextToSpeech.isSpeaking) mTextToSpeech.stop()
+        else mTextToSpeech.speak(
+            word.word.split(" - ")[0], TextToSpeech.QUEUE_FLUSH,
+            null, TextToSpeech.ACTION_TTS_QUEUE_PROCESSING_COMPLETED
+        )
     }
 
     private fun showWordPopupMenu(word: Word, view: View) {
@@ -79,6 +159,19 @@ class DictionaryFragment : Fragment() {
 
     private fun inflateToolbarMenu(toolbar: Toolbar) {
         toolbar.inflateMenu(R.menu.dictionary_menu)
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_filters -> {
+                    mFiltersBottomSheetBehavior.state = STATE_EXPANDED
+                    true
+                }
+                R.id.action_settings -> {
+                    findNavController().navigate(DictionaryFragmentDirections.showSettingsFragment())
+                    true
+                }
+                else -> true
+            }
+        }
         val searchManager =
             requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         mSearchView = toolbar.menu.findItem(R.id.action_search).actionView as SearchView

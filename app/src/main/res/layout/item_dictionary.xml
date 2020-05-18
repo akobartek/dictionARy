@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorListItemBackground"
     app:cardCornerRadius="3dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
@@ -12,22 +13,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:background="@color/colorListItemBackground">
+        android:layout_marginBottom="4dp">
 
         <ImageButton
-            android:id="@+id/taskOptionsBtn"
+            android:id="@+id/wordOptionsBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
             android:background="?selectableItemBackgroundBorderless"
             android:contentDescription="@string/cd_word_options"
-            android:padding="8dp"
+            android:padding="4dp"
             android:src="@drawable/ic_options"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!--        TODO() -> Play sound-->
+        <ImageButton
+            android:id="@+id/wordSoundBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cd_word_sound"
+            android:padding="4dp"
+            android:src="@drawable/anim_sound_to_pause"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/wordOptionsBtn"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/wordTV"
@@ -40,7 +51,7 @@
             android:paddingBottom="4dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/colorText"
-            app:layout_constraintEnd_toStartOf="@+id/taskOptionsBtn"
+            app:layout_constraintEnd_toStartOf="@+id/wordSoundBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@tools:sample/lorem" />
@@ -57,7 +68,7 @@
             android:paddingBottom="4dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:textColor="@color/colorText"
-            app:layout_constraintEnd_toStartOf="@+id/taskOptionsBtn"
+            app:layout_constraintEnd_toStartOf="@+id/wordSoundBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wordTV"
             tools:text="@tools:sample/lorem" />
