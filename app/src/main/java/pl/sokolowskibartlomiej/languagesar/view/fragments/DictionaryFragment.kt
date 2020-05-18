@@ -13,11 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,10 +30,15 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import kotlinx.android.synthetic.main.content_dictionary.view.*
 import kotlinx.android.synthetic.main.dialog_list.view.*
 import kotlinx.android.synthetic.main.fragment_dictionary.view.*
+import kotlinx.coroutines.launch
 import pl.sokolowskibartlomiej.languagesar.BuildConfig
 import pl.sokolowskibartlomiej.languagesar.R
 import pl.sokolowskibartlomiej.languagesar.db.entities.Word
+import pl.sokolowskibartlomiej.languagesar.db.entities.Word.Companion.WORD_STATUS_KNOWN
+import pl.sokolowskibartlomiej.languagesar.db.entities.Word.Companion.WORD_STATUS_NONE
+import pl.sokolowskibartlomiej.languagesar.db.entities.Word.Companion.WORD_STATUS_SAVED
 import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
+import pl.sokolowskibartlomiej.languagesar.utils.showShortToast
 import pl.sokolowskibartlomiej.languagesar.view.adapters.DictionaryRecyclerAdapter
 import pl.sokolowskibartlomiej.languagesar.view.adapters.LanguageRecyclerAdapter
 import pl.sokolowskibartlomiej.languagesar.viewmodel.DictionaryViewModel
@@ -43,7 +50,9 @@ class DictionaryFragment : Fragment() {
     private lateinit var mAdapter: DictionaryRecyclerAdapter
     private lateinit var mSearchView: SearchView
     private lateinit var mFiltersBottomSheetBehavior: BottomSheetBehavior<*>
+    private lateinit var mAddWordBottomSheetBehavior: BottomSheetBehavior<*>
     private lateinit var mTextToSpeech: TextToSpeech
+    private lateinit var mLoadingDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -71,30 +80,33 @@ class DictionaryFragment : Fragment() {
         }
         mFiltersBottomSheetBehavior = BottomSheetBehavior.from(view.filtersBottomSheet)
         mFiltersBottomSheetBehavior.state = STATE_HIDDEN
+        mAddWordBottomSheetBehavior = BottomSheetBehavior.from(view.addWordBottomSheet)
+        mAddWordBottomSheetBehavior.state = STATE_HIDDEN
 
         mViewModel = ViewModelProvider(this@DictionaryFragment).get(DictionaryViewModel::class.java)
+        mLoadingDialog = AlertDialog.Builder(requireContext())
+            .setView(R.layout.dialog_loading)
+            .setCancelable(false)
+            .create()
 
         PreferencesManager.filtersLiveData.observe(viewLifecycleOwner, Observer {
             mAdapter.setStatusFilters(it)
-            Log.d("filters", it)
         })
 
-        view.addWordBtn.setOnClickListener {
-            // TODO() -> Show bottom sheet
-        }
+        view.addWordBtn.setOnClickListener { mAddWordBottomSheetBehavior.state = STATE_EXPANDED }
+    }
 
+    override fun onResume() {
+        super.onResume()
         mTextToSpeech = TextToSpeech(context, TextToSpeech.OnInitListener { status ->
             if (status == TextToSpeech.SUCCESS) {
                 mTextToSpeech.language = Locale(PreferencesManager.getSelectedLanguage())
                 mTextToSpeech.setSpeechRate(0.9f)
             } else if (BuildConfig.DEBUG) Log.e("TextToSpeech", "Initialization failed!")
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
         if (PreferencesManager.getSelectedLanguage() == "") showSelectLanguageDialog()
         else fetchDictionary()
+        Log.d("xDDD", PreferencesManager.getSelectedLanguage())
     }
 
     override fun onStop() {
@@ -102,6 +114,7 @@ class DictionaryFragment : Fragment() {
             mTextToSpeech.stop()
             mTextToSpeech.shutdown()
         }
+        if (mLoadingDialog.isShowing) mLoadingDialog.hide()
         super.onStop()
     }
 
@@ -112,10 +125,14 @@ class DictionaryFragment : Fragment() {
         } else if (::mFiltersBottomSheetBehavior.isInitialized && mFiltersBottomSheetBehavior.state != STATE_HIDDEN) {
             mFiltersBottomSheetBehavior.state = STATE_HIDDEN
             false
+        } else if (::mAddWordBottomSheetBehavior.isInitialized && mAddWordBottomSheetBehavior.state != STATE_HIDDEN) {
+            mAddWordBottomSheetBehavior.state = STATE_HIDDEN
+            false
         } else true
     }
 
     private fun fetchDictionary() {
+        if (!PreferencesManager.areWordsInDatabase()) mViewModel.insertWordsFromFileToDatabase()
         mViewModel.getWordsFromDatabase().observe(viewLifecycleOwner, Observer { words ->
             mAdapter.setWordsList(
                 words.sortedWith(
@@ -154,7 +171,38 @@ class DictionaryFragment : Fragment() {
     }
 
     private fun showWordPopupMenu(word: Word, view: View) {
-        // TODO() -> Options
+        val popupMenu = PopupMenu(requireContext(), view)
+        popupMenu.menuInflater.inflate(R.menu.word_popup_menu, popupMenu.menu)
+        popupMenu.menu.findItem(R.id.action_word_save).isVisible = word.status == WORD_STATUS_NONE
+        popupMenu.menu.findItem(R.id.action_word_save_remove)
+            .isVisible = word.status == WORD_STATUS_SAVED
+        popupMenu.menu.findItem(R.id.action_word_known).isVisible = word.status == WORD_STATUS_NONE
+        popupMenu.menu.findItem(R.id.action_word_known_remove)
+            .isVisible = word.status == WORD_STATUS_KNOWN
+
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            lifecycleScope.launch {
+                mLoadingDialog.show()
+                when (menuItem.itemId) {
+                    R.id.action_word_save ->
+                        mViewModel.updateWordStatusAsync(word, WORD_STATUS_SAVED)
+                    R.id.action_word_save_remove ->
+                        mViewModel.updateWordStatusAsync(word, WORD_STATUS_NONE)
+                    R.id.action_word_known ->
+                        mViewModel.updateWordStatusAsync(word, WORD_STATUS_KNOWN)
+                    R.id.action_word_known_remove ->
+                        mViewModel.updateWordStatusAsync(word, WORD_STATUS_NONE)
+                    R.id.action_word_delete -> mViewModel.deleteWordAsync(word)
+                    else -> mViewModel.updateWordStatusAsync(word, WORD_STATUS_NONE)
+                }.await()
+                popupMenu.dismiss()
+                mLoadingDialog.hide()
+                requireContext().showShortToast(R.string.database_updated)
+            }
+            true
+        }
+        popupMenu.show()
+
     }
 
     private fun inflateToolbarMenu(toolbar: Toolbar) {
@@ -208,7 +256,6 @@ class DictionaryFragment : Fragment() {
             .setCancelable(false)
             .setPositiveButton(getString(R.string.save)) { dialog, _ ->
                 PreferencesManager.setSelectedLanguage(languageAdapter.getSelectedLanguage())
-                if (!PreferencesManager.areWordsInDatabase()) mViewModel.insertWordsFromFileToDatabase()
                 fetchDictionary()
                 dialog?.dismiss()
             }

@@ -7,12 +7,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.JsonEncodingException
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import pl.sokolowskibartlomiej.languagesar.BuildConfig
 import pl.sokolowskibartlomiej.languagesar.apicalls.RetrofitClient
 import pl.sokolowskibartlomiej.languagesar.apicalls.translate.TranslateRepository
 import pl.sokolowskibartlomiej.languagesar.db.entities.Word
+import pl.sokolowskibartlomiej.languagesar.db.entities.Word.Companion.WORD_STATUS_SAVED
 import pl.sokolowskibartlomiej.languagesar.model.repositories.WordsRepository
 import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
 import java.util.*
@@ -54,7 +57,7 @@ class PhotoViewModel(val app: Application) : AndroidViewModel(app) {
         val word = Word(
             word = "$translation - $sourceText - $sourceText",
             language = PreferencesManager.getSelectedLanguage(),
-            status = 1
+            status = WORD_STATUS_SAVED
         )
         viewModelScope.launch(Dispatchers.IO) { mDatabaseRepository.insertWord(word) }
     }

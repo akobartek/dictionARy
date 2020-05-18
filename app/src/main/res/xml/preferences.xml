@@ -11,5 +11,14 @@
             android:textColor="@color/colorText"
             android:title="@string/night_mode_title"
             app:iconSpaceReserved="false" />
+
+        <ListPreference
+            android:background="@color/colorBackground"
+            android:entries="@array/languages_labels_pl"
+            android:entryValues="@array/languages_values_pl"
+            android:key="@string/selected_language_key"
+            android:textColor="@color/colorText"
+            android:title="@string/selected_language_title"
+            app:iconSpaceReserved="false" />
     </androidx.preference.PreferenceCategory>
 </androidx.preference.PreferenceScreen>

@@ -1,12 +1,14 @@
 package pl.sokolowskibartlomiej.languagesar.viewmodel
 
 import android.app.Application
-import android.content.res.AssetManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import pl.sokolowskibartlomiej.languagesar.db.entities.Word
+import pl.sokolowskibartlomiej.languagesar.db.entities.Word.Companion.WORD_STATUS_NONE
 import pl.sokolowskibartlomiej.languagesar.model.repositories.WordsRepository
 import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
 import java.io.BufferedReader
@@ -35,4 +37,24 @@ class DictionaryViewModel(val app: Application) : AndroidViewModel(app) {
             PreferencesManager.wordsAddedToDatabase()
         }
     }
+
+    fun insertWordAsync(word: String, translation: String, isSaved: Boolean): Deferred<Unit> =
+        viewModelScope.async(Dispatchers.IO) {
+            mWordsRepository.insertWord(
+                Word(
+                    word = "$word - $translation - $translation",
+                    language = PreferencesManager.getSelectedLanguage(),
+                    status = if (isSaved) Word.WORD_STATUS_SAVED else WORD_STATUS_NONE
+                )
+            )
+        }
+
+    fun updateWordStatusAsync(word: Word, status: Int): Deferred<Unit> =
+        viewModelScope.async(Dispatchers.IO) {
+            word.status = status
+            mWordsRepository.updateWord(word)
+        }
+
+    fun deleteWordAsync(word: Word): Deferred<Unit> =
+        viewModelScope.async(Dispatchers.IO) { mWordsRepository.deleteWord(word) }
 }

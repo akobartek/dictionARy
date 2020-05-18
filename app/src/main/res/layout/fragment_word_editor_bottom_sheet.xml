@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addWordSheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_background"
+    android:clickable="true"
+    android:elevation="8dp"
+    android:focusable="true"
+    tools:context=".view.fragments.WordEditorBottomSheetFragment"
+    tools:ignore="Overdraw">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidePeekHeight"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="48dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/add_word"
+        android:textColor="@color/colorMenuIcons"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/guidePeekHeight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/collapseSheetBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/cd_collapse_bottom_sheet"
+        android:scaleType="center"
+        android:tint="@color/colorMenuIcons"
+        app:layout_constraintBottom_toTopOf="@id/guidePeekHeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close" />
+
+    <ImageButton
+        android:id="@+id/saveWordBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/cd_save_translation"
+        android:scaleType="center"
+        app:layout_constraintBottom_toTopOf="@id/guidePeekHeight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_save" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wordInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="48dp"
+        android:textColorHint="@color/colorMenuIcons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guidePeekHeight">
+
+        <pl.sokolowskibartlomiej.languagesar.view.ui.MyTextInputEditText
+            android:id="@+id/wordET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorBackground"
+            android:hint="@string/word"
+            android:textColor="@color/colorText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/translationInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColorHint="@color/colorMenuIcons"
+        app:layout_constraintEnd_toEndOf="@+id/wordInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/wordInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/wordInputLayout">
+
+        <pl.sokolowskibartlomiej.languagesar.view.ui.MyTextInputEditText
+            android:id="@+id/translationET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorBackground"
+            android:hint="@string/translation"
+            android:textColor="@color/colorText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/saveWordCheckBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:buttonTint="@color/colorMenuIcons"
+        android:gravity="center"
+        android:text="@string/add_to_saved_words"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="@+id/wordInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/wordInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/translationInputLayout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

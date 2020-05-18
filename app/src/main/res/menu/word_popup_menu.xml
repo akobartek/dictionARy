@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_word_save"
+        android:title="@string/save_word" />
+    <item
+        android:id="@+id/action_word_save_remove"
+        android:title="@string/save_word_remove" />
+    <item
+        android:id="@+id/action_word_known"
+        android:title="@string/known_word" />
+    <item
+        android:id="@+id/action_word_known_remove"
+        android:title="@string/known_word_remove" />
+    <item
+        android:id="@+id/action_word_delete"
+        android:title="@string/delete_word" />
+</menu>

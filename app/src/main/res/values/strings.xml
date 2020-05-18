@@ -19,6 +19,8 @@
     <string name="night_mode_key" translatable="false">night_mode</string>
     <string name="night_mode_title">Night mode</string>
     <string name="night_mode_summary">Turn on night mode in the app</string>
+    <string name="selected_language_key" translatable="false">selected_language</string>
+    <string name="selected_language_title">Selected language</string>
 
     <!-- PHOTOS OBJECT DETECTION -->
     <string name="ar">AR</string>
@@ -61,6 +63,18 @@
     <string name="empty_dictionary">There are no words that meet your filters!</string>
     <string name="cd_word_options">Operations that you can do with this word</string>
     <string name="cd_word_sound">Play/pause this word</string>
+    <string name="add_word">Add new word</string>
+    <string name="word">Word</string>
+    <string name="word_empty_error">Word cannot be empty!</string>
+    <string name="translation">Translation</string>
+    <string name="translation_empty_error">Translation cannot be empty!</string>
+    <string name="add_to_saved_words">Add to the list of saved words</string>
+    <string name="save_word">Add to saved words</string>
+    <string name="save_word_remove">Remove from saved words</string>
+    <string name="known_word">Add to known words</string>
+    <string name="known_word_remove">Remove from known words</string>
+    <string name="delete_word">Delete word</string>
+    <string name="database_updated">Database successfully updated!</string>
 
     <!-- TEST STRINGS -->
     <string name="tests">Tests</string>

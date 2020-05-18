@@ -231,7 +231,7 @@ auto - samochód - car
 a piedi - pieszo - on foot
 cura - troska, opieka - care
 secondo - drugi - second
-abbastanza - dość, wystarczająco - enough
+abbastanza - dość, wystarczająco, całkiem - enough, quite
 pianura - równina - plain
 ragazza - dziewczyna - girl
 solito - zazwyczaj - usual
@@ -559,7 +559,6 @@ controllo - kontrola - control
 decimale - dziesiętny - decimal
 orecchio - ucho - ear
 altro - inny, coś innego - other, else
-abbastanza - całkiem, dość - quite
 rotto - popsuty - broken
 caso - przypadek - case
 mezzo - środek - middle
@@ -840,7 +839,7 @@ vittoria - zwycięstwo - win
 sognare - sen, marzenie - dream
 sera - wieczór - evening
 condizione - stan - condition
-alimentazione - zasilacz - supply, feed
+alimentazione - odżywiazasilacz - supply, feed
 strumento - narzędzia - tool
 totale - całkowity, ogólny - total
 di base - podstawowy - basic

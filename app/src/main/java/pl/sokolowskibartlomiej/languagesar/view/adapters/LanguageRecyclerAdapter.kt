@@ -13,8 +13,8 @@ import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
 class LanguageRecyclerAdapter : RecyclerView.Adapter<LanguageRecyclerAdapter.LanguageViewHolder>() {
 
     private val languages =
-        if (PreferencesManager.getUserLanguage().contains("en")) arrayOf("es", "fr", "it")
-        else arrayOf("en", "es", "fr", "it")
+        if (PreferencesManager.getUserLanguage().contains("en")) arrayOf("es", "it", "fr")
+        else arrayOf("en", "es", "it", "fr")
     private var selectedPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LanguageViewHolder(
