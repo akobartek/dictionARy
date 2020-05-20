@@ -13,10 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import pl.sokolowskibartlomiej.languagesar.R
 import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
 import pl.sokolowskibartlomiej.languagesar.utils.showShortToast
-import pl.sokolowskibartlomiej.languagesar.view.fragments.DictionaryFragment
-import pl.sokolowskibartlomiej.languagesar.view.fragments.DictionaryFragmentDirections
-import pl.sokolowskibartlomiej.languagesar.view.fragments.TestResultsFragmentDirections
-import pl.sokolowskibartlomiej.languagesar.view.fragments.TestStartFragmentDirections
+import pl.sokolowskibartlomiej.languagesar.view.fragments.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -87,7 +84,9 @@ class MainActivity : AppCompatActivity() {
                 if ((supportFragmentManager.findFragmentById(R.id.navHostFragment)!!
                         .childFragmentManager.fragments[0] as DictionaryFragment).onBackPressed()
                 ) doubleBackPressToExit()
-            // TODO() -> onBackPressed for test questions and results fragments
+            R.id.testQuestionsFragment ->
+                (supportFragmentManager.findFragmentById(R.id.navHostFragment)!!
+                    .childFragmentManager.fragments[0] as TestQuestionsFragment).onBackPressed()
             R.id.settingsFragment ->
                 findNavController(R.id.navHostFragment).navigateUp()
             else -> doubleBackPressToExit()

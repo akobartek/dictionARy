@@ -31,6 +31,8 @@ class TestQuestionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.questionToolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        view.questionToolbar.setNavigationOnClickListener { onBackPressed() }
 
         mLoadingDialog = AlertDialog.Builder(requireContext())
             .setView(R.layout.dialog_loading)
@@ -65,6 +67,18 @@ class TestQuestionsFragment : Fragment() {
             } else showFinishTestDialog()
         }
     }
+
+    fun onBackPressed() =
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.interrupt_test_dialog_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.interrupt) { dialog, _ ->
+                dialog.dismiss()
+                findNavController().navigateUp()
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
+            .create()
+            .show()
 
     override fun onStop() {
         if (mLoadingDialog.isShowing) mLoadingDialog.hide()

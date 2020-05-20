@@ -91,7 +91,9 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="finish">Finish</string>
-    <string name="finish_test_dialog_title">Finishing test</string>
+    <string name="finish_test_dialog_title">Finishing the test</string>
     <string name="finish_test_dialog_msg1">Are you sure you want to finish the test and see your results?</string>
     <string name="finish_test_dialog_msg2">Are you sure you want to finish the test and see your results? You left some questions without answer!</string>
+    <string name="interrupt">Interrupt</string>
+    <string name="interrupt_test_dialog_msg">Are you sure you want to interrupt the test? All progress will be lost!</string>
 </resources>

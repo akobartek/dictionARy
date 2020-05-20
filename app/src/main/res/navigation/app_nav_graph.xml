@@ -17,8 +17,8 @@
         <action
             android:id="@+id/showSettingsFragment"
             app:destination="@+id/settingsFragment"
-            app:enterAnim="@anim/slide_in_bottom"
-            app:popEnterAnim="@anim/slide_in_top" />
+            app:enterAnim="@anim/slide_in_top"
+            app:popEnterAnim="@anim/slide_in_bottom" />
     </fragment>
 
     <fragment
@@ -33,7 +33,8 @@
         <action
             android:id="@+id/showQuestionsFragment"
             app:destination="@+id/testQuestionsFragment"
-            app:enterAnim="@anim/slide_in_top" />
+            app:enterAnim="@anim/slide_in_top"
+            app:popEnterAnim="@anim/slide_in_bottom" />
     </fragment>
 
     <fragment
