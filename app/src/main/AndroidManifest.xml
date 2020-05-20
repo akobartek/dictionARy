@@ -23,7 +23,9 @@
         <activity
             android:name=".view.activities.MainActivity"
             android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

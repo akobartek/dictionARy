@@ -7,4 +7,5 @@
     <color name="colorMenuIcons">#777777</color>
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorListItemBackground">#FFFFFF</color>
+    <color name="colorAnswer">#999999</color>
 </resources>

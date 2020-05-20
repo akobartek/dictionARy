@@ -1,7 +1,11 @@
 package pl.sokolowskibartlomiej.languagesar.utils
 
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -9,12 +13,40 @@ import android.media.Image
 import android.net.ConnectivityManager
 import android.os.Build
 import android.view.View
-import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.Transformation
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import pl.sokolowskibartlomiej.languagesar.R
+import java.util.*
+import kotlin.math.min
+
+// region STRING
+fun String.similarity(s2: String): Double {
+    val longer = if (this.length >= s2.length) this else s2
+    val shorter = if (this.length < s2.length) this else s2
+    if (longer.isEmpty()) return 1.0
+    return (longer.length - editDistance(
+        longer.toLowerCase(Locale.ROOT), shorter.toLowerCase(Locale.ROOT)
+    )) / longer.length.toDouble()
+}
+
+private fun editDistance(s1: String, s2: String): Int {
+    val costs = IntArray(s2.length + 1)
+    for (i in 0..s1.length) {
+        var lastValue = i
+        for (j in 0..s2.length) {
+            if (i == 0) costs[j] = j
+            else if (j > 0) {
+                var newValue = costs[j - 1]
+                if (s1[i - 1] != s2[j - 1]) newValue = min(min(newValue, lastValue), costs[j]) + 1
+                costs[j - 1] = lastValue
+                lastValue = newValue
+            }
+        }
+        if (i > 0) costs[s2.length] = lastValue
+    }
+    return costs[s2.length]
+}
+// endregion STRING
 
 // region CONTEXT
 fun Context.showBasicAlertDialog(titleId: Int?, messageId: Int) {
@@ -79,56 +111,26 @@ fun Activity.tryToRunFunctionOnInternet(function: () -> Unit, functionCancel: ()
 // endregion ACTIVITY
 
 // region VIEW
-fun View.expand() {
-    val matchParentMeasureSpec =
-        View.MeasureSpec.makeMeasureSpec((parent as View).width, View.MeasureSpec.EXACTLY)
-    val wrapContentMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-    measure(matchParentMeasureSpec, wrapContentMeasureSpec)
-    val targetHeight = measuredHeight
-
-    visibility = View.VISIBLE
-    val animation = object : Animation() {
-        override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-            layoutParams.height = if (interpolatedTime == 1f)
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            else
-                (targetHeight * interpolatedTime).toInt()
-            requestLayout()
-        }
-
-        override fun willChangeBounds(): Boolean = true
-    }
-    // Expansion speed of 1dp/ms
-    animation.duration =
-        ((targetHeight / context.resources.displayMetrics.density).toInt()).toLong()
-    startAnimation(animation)
-}
-
-fun View.collapse() {
-    val initialHeight = measuredHeight
-
-    val animation = object : Animation() {
-        override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-            if (interpolatedTime == 1f) {
-                visibility = View.GONE
-            } else {
-                layoutParams.height = initialHeight - (initialHeight * interpolatedTime).toInt()
-                requestLayout()
-            }
-        }
-
-        override fun willChangeBounds(): Boolean = true
-    }
-    // Collapse speed of 1dp/ms
-    animation.duration =
-        ((initialHeight / context.resources.displayMetrics.density).toInt()).toLong()
-    startAnimation(animation)
-}
+fun View.getChildViewByName(name: String): View =
+    findViewById(resources.getIdentifier(name, "id", context.packageName))
 
 fun View.rotate(rotation: Float) {
     this.animate()
         .rotation(rotation)
         .duration = 200
+}
+
+@SuppressLint("ObjectAnimatorBinding")
+fun View.animateBackgroundTintChange(startColor: Int, endColor: Int) {
+    val animator =
+        ObjectAnimator.ofInt(this, "backgroundTint", startColor, endColor)
+    animator
+        .setDuration(300)
+        .setEvaluator(ArgbEvaluator())
+    animator.addUpdateListener { anim ->
+        backgroundTintList = ColorStateList.valueOf(anim.animatedValue as Int)
+    }
+    animator.start()
 }
 // endregion VIEW
 

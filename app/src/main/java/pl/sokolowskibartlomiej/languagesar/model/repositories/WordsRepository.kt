@@ -10,8 +10,12 @@ class WordsRepository(application: Application) {
 
     private var mWordsDao: WordsDao = WordsDatabase.getInstance(application)!!.wordsDao()
 
-    fun getWordsByLanguage(language: String) =
-        mWordsDao.getWordsByLanguage(language)
+    fun getWordsLiveDataByLanguage(language: String) =
+        mWordsDao.getWordsLiveDataByLanguage(language)
+
+    @WorkerThread
+    suspend fun getWordsListByLanguage(language: String) =
+        mWordsDao.getWordsListByLanguage(language)
 
     @WorkerThread
     suspend fun insertWord(word: Word) = mWordsDao.insertWord(word)

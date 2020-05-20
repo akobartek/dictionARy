@@ -59,6 +59,9 @@
         android:name="pl.sokolowskibartlomiej.languagesar.view.fragments.TestResultsFragment"
         tools:layout="@layout/fragment_test_results">
 
+        <argument
+            android:name="questions"
+            app:argType="pl.sokolowskibartlomiej.languagesar.model.TestQuestion[]" />
         <action
             android:id="@+id/showTestStartFragment"
             app:destination="@+id/testStartFragment"

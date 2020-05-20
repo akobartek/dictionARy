@@ -8,7 +8,10 @@ import pl.sokolowskibartlomiej.languagesar.db.entities.Word
 interface WordsDao {
 
     @Query("SELECT * FROM words_table WHERE language = :language")
-    fun getWordsByLanguage(language: String): LiveData<List<Word>>
+    fun getWordsLiveDataByLanguage(language: String): LiveData<List<Word>>
+
+    @Query("SELECT * FROM words_table WHERE language = :language")
+    suspend fun getWordsListByLanguage(language: String): List<Word>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWord(word: Word)
@@ -25,6 +28,6 @@ interface WordsDao {
     @Query("SELECT COUNT(*) FROM words_table WHERE language = :language")
     suspend fun getCountOfWords(language: String): Int
 
-    @Query("SELECT COUNT(*) FROM words_table WHERE status = :status AND language = :language")
+    @Query("SELECT COUNT(*) FROM words_table WHERE language = :language AND status = :status")
     suspend fun getCountByStatus(language: String, status: Int): Int
 }

@@ -46,22 +46,22 @@ class TestStartFragment : Fragment() {
                 when (checkedId) {
                     R.id.statusAllBtn ->
                         view.numberOfWordsSlider.valueTo =
-                            if (numberOfResults[0] <= 64) numberOfResults[0].toFloat()
-                            else 64f
+                            if (numberOfResults[0] <= 50) numberOfResults[0].toFloat()
+                            else 50f
                     R.id.statusSavedBtn ->
                         if (numberOfResults[1] == 0) {
                             requireContext().showBasicAlertDialog(null, R.string.no_saved_words)
                             view.statusRadioGroup.check(R.id.statusAllBtn)
                         } else view.numberOfWordsSlider.valueTo =
-                            if (numberOfResults[1] <= 64) numberOfResults[1].toFloat()
-                            else 64f
+                            if (numberOfResults[1] <= 50) numberOfResults[1].toFloat()
+                            else 50f
                     R.id.statusKnownBtn ->
                         if (numberOfResults[2] == 0) {
                             requireContext().showBasicAlertDialog(null, R.string.no_known_words)
                             view.statusRadioGroup.check(R.id.statusAllBtn)
                         } else view.numberOfWordsSlider.valueTo =
-                            if (numberOfResults[2] <= 64) numberOfResults[2].toFloat()
-                            else 64f
+                            if (numberOfResults[2] <= 50) numberOfResults[2].toFloat()
+                            else 50f
                 }
             }
             mLoadingDialog.hide()
@@ -71,8 +71,9 @@ class TestStartFragment : Fragment() {
             view.startTestBtn.isEnabled = false
             val numberOfWords = view.numberOfWordsSlider.value.toInt()
             if (numberOfWords == 0) {
-                view.testNumberOfWordsTitle.error = ""
                 requireContext().showBasicAlertDialog(null, R.string.number_of_words_error)
+                view.testNumberOfWordsTitle.error = ""
+                view.startTestBtn.isEnabled = true
                 return@setOnClickListener
             }
             val status = when (view.statusRadioGroup.checkedRadioButtonId) {
@@ -92,7 +93,7 @@ class TestStartFragment : Fragment() {
         super.onStop()
     }
 
-    fun showDatabaseEmptyDialog() =
+    private fun showDatabaseEmptyDialog() =
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.no_words_title)
             .setMessage(R.string.no_words_msg)

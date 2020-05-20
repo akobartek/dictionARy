@@ -19,7 +19,7 @@ class DictionaryViewModel(val app: Application) : AndroidViewModel(app) {
     private val mWordsRepository = WordsRepository(app)
 
     fun getWordsFromDatabase() =
-        mWordsRepository.getWordsByLanguage(PreferencesManager.getSelectedLanguage())
+        mWordsRepository.getWordsLiveDataByLanguage(PreferencesManager.getSelectedLanguage())
 
     fun insertWordsFromFileToDatabase() {
         viewModelScope.launch(Dispatchers.IO) {

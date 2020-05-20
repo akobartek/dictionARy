@@ -67,7 +67,6 @@ class DictionaryFragment : Fragment() {
         view.dictionaryRecyclerView.apply {
             layoutManager = LinearLayoutManager(view.context)
             itemAnimator = DefaultItemAnimator()
-            adapter = mAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -139,6 +138,7 @@ class DictionaryFragment : Fragment() {
                 ),
                 PreferencesManager.getFilters()
             )
+            view?.dictionaryRecyclerView?.adapter = mAdapter
             view?.dictionaryRecyclerView?.scheduleLayoutAnimation()
             view?.dictionaryLoadingIndicator?.hide()
         })

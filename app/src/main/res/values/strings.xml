@@ -87,4 +87,11 @@
     <string name="no_words_msg">There are no words in database! If you want to test your knowledge, add words first!</string>
     <string name="no_saved_words">There are no saved words in database!</string>
     <string name="no_known_words">There are no known words in database!</string>
+    <string name="question_x">Question %d</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="finish">Finish</string>
+    <string name="finish_test_dialog_title">Finishing test</string>
+    <string name="finish_test_dialog_msg1">Are you sure you want to finish the test and see your results?</string>
+    <string name="finish_test_dialog_msg2">Are you sure you want to finish the test and see your results? You left some questions without answer!</string>
 </resources>

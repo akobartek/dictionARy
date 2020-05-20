@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/questionLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".view.fragments.TestQuestionsFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/translationTV"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="36dp"
+        android:gravity="center"
+        android:maxLines="2"
+        android:padding="16dp"
+        android:textColor="@color/colorText"
+        android:textStyle="italic"
+        app:autoSizeMaxTextSize="36sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="in addition (to), besides, furthermore" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/answer1"
+        style="@style/TestAnswer.Odd"
+        android:tag="1"
+        app:layout_constraintEnd_toStartOf="@+id/answer2"
+        app:layout_constraintStart_toStartOf="@+id/translationTV"
+        app:layout_constraintTop_toBottomOf="@+id/translationTV"
+        tools:text="Answer 1" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/answer2"
+        style="@style/TestAnswer.Even"
+        android:tag="2"
+        app:layout_constraintEnd_toEndOf="@+id/translationTV"
+        app:layout_constraintStart_toEndOf="@+id/answer1"
+        app:layout_constraintTop_toBottomOf="@+id/translationTV"
+        tools:text="Answer 2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/answer3"
+        style="@style/TestAnswer.Odd"
+        android:tag="3"
+        app:layout_constraintEnd_toStartOf="@+id/answer4"
+        app:layout_constraintStart_toStartOf="@+id/translationTV"
+        app:layout_constraintTop_toBottomOf="@+id/answer1"
+        tools:text="Answer 3" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/answer4"
+        style="@style/TestAnswer.Even"
+        android:tag="4"
+        app:layout_constraintEnd_toEndOf="@+id/translationTV"
+        app:layout_constraintStart_toEndOf="@+id/answer3"
+        app:layout_constraintTop_toBottomOf="@+id/answer2"
+        tools:text="Answer 4" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/nextQuestionBtn"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        android:text="@string/next"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:textColor="@color/colorBackground"
+        app:backgroundTint="@color/colorAccent"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/previousQuestionBtn"
+        app:layout_constraintTop_toBottomOf="@+id/answer4" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/previousQuestionBtn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="16dp"
+        android:text="@string/previous"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:textColor="@color/colorAccent"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/nextQuestionBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answer4"
+        app:strokeColor="@color/colorAccent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

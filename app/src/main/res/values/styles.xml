@@ -21,4 +21,28 @@
         <item name="android:layout">@layout/fragment_settings</item>
     </style>
 
+    <style name="TestAnswer">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">120dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:padding">24dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/colorBackground</item>
+        <item name="autoSizeMaxTextSize">28sp</item>
+        <item name="autoSizeMinTextSize">14sp</item>
+        <item name="autoSizeStepGranularity">1sp</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="backgroundTint">@color/colorAnswer</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="strokeColor">@color/colorAccent</item>
+    </style>
+
+    <style name="TestAnswer.Odd" parent="TestAnswer">
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+
+    <style name="TestAnswer.Even" parent="TestAnswer">
+        <item name="android:layout_marginStart">8dp</item>
+    </style>
 </resources>
