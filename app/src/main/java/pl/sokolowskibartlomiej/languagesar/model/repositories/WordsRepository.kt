@@ -25,4 +25,11 @@ class WordsRepository(application: Application) {
 
     @WorkerThread
     suspend fun deleteWord(word: Word) = mWordsDao.deleteWord(word)
+
+    @WorkerThread
+    suspend fun getCountOfWords(language: String) = mWordsDao.getCountOfWords(language)
+
+    @WorkerThread
+    suspend fun getCountByStatus(language: String, status: Int) =
+        mWordsDao.getCountByStatus(language, status)
 }

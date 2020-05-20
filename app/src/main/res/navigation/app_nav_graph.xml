@@ -12,7 +12,7 @@
 
         <action
             android:id="@+id/showTestFragment"
-            app:destination="@+id/testFragment"
+            app:destination="@+id/testStartFragment"
             app:enterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/showSettingsFragment"
@@ -22,10 +22,47 @@
     </fragment>
 
     <fragment
-        android:id="@+id/testFragment"
-        android:name="pl.sokolowskibartlomiej.languagesar.view.fragments.TestFragment"
-        tools:layout="@layout/fragment_test">
+        android:id="@+id/testStartFragment"
+        android:name="pl.sokolowskibartlomiej.languagesar.view.fragments.TestStartFragment"
+        tools:layout="@layout/fragment_test_start">
 
+        <action
+            android:id="@+id/showDictionaryFragment"
+            app:destination="@+id/dictionaryFragment"
+            app:enterAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/showQuestionsFragment"
+            app:destination="@+id/testQuestionsFragment"
+            app:enterAnim="@anim/slide_in_top" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/testQuestionsFragment"
+        android:name="pl.sokolowskibartlomiej.languagesar.view.fragments.TestQuestionsFragment"
+        tools:layout="@layout/fragment_test_questions">
+
+        <argument
+            android:name="wordsStatus"
+            app:argType="integer" />
+        <argument
+            android:name="numberOfWords"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/showTestResultsFragment"
+            app:destination="@+id/testResultsFragment"
+            app:enterAnim="@anim/slide_in_top" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/testResultsFragment"
+        android:name="pl.sokolowskibartlomiej.languagesar.view.fragments.TestResultsFragment"
+        tools:layout="@layout/fragment_test_results">
+
+        <action
+            android:id="@+id/showTestStartFragment"
+            app:destination="@+id/testStartFragment"
+            app:enterAnim="@anim/slide_in_bottom" />
         <action
             android:id="@+id/showDictionaryFragment"
             app:destination="@+id/dictionaryFragment"

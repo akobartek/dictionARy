@@ -106,7 +106,6 @@ class DictionaryFragment : Fragment() {
         })
         if (PreferencesManager.getSelectedLanguage() == "") showSelectLanguageDialog()
         else fetchDictionary()
-        Log.d("xDDD", PreferencesManager.getSelectedLanguage())
     }
 
     override fun onStop() {

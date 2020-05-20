@@ -25,7 +25,6 @@ class DictionaryViewModel(val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch(Dispatchers.IO) {
             val words = arrayListOf<Word>()
             val language = PreferencesManager.getSelectedLanguage()
-
             val reader = BufferedReader(InputStreamReader(app.assets.open("words-${language}.txt")))
             var line = reader.readLine()
             while (line != null) {

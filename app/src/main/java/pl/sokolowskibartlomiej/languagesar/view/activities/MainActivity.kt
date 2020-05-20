@@ -15,7 +15,8 @@ import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
 import pl.sokolowskibartlomiej.languagesar.utils.showShortToast
 import pl.sokolowskibartlomiej.languagesar.view.fragments.DictionaryFragment
 import pl.sokolowskibartlomiej.languagesar.view.fragments.DictionaryFragmentDirections
-import pl.sokolowskibartlomiej.languagesar.view.fragments.TestFragmentDirections
+import pl.sokolowskibartlomiej.languagesar.view.fragments.TestResultsFragmentDirections
+import pl.sokolowskibartlomiej.languagesar.view.fragments.TestStartFragmentDirections
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,7 +40,8 @@ class MainActivity : AppCompatActivity() {
         val navController = (navHostFragment as NavHostFragment? ?: return).navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
             mCurrentFragmentId = destination.id
-            if (mCurrentFragmentId == R.id.settingsFragment) bottomNavView.visibility = View.GONE
+            if (mCurrentFragmentId == R.id.settingsFragment || mCurrentFragmentId == R.id.testQuestionsFragment)
+                bottomNavView.visibility = View.GONE
             else bottomNavView.visibility = View.VISIBLE
         }
         bottomNavView.selectedItemId = R.id.navigation_dictionary
@@ -54,9 +56,13 @@ class MainActivity : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigation_dictionary -> {
-                    if (mCurrentFragmentId == R.id.testFragment)
+                    if (mCurrentFragmentId == R.id.testStartFragment)
                         findNavController(R.id.navHostFragment).navigate(
-                            TestFragmentDirections.showDictionaryFragment()
+                            TestStartFragmentDirections.showDictionaryFragment()
+                        )
+                    else if (mCurrentFragmentId == R.id.testResultsFragment)
+                        findNavController(R.id.navHostFragment).navigate(
+                            TestResultsFragmentDirections.showDictionaryFragment()
                         )
                     return@setOnNavigationItemSelectedListener true
                 }
@@ -81,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                 if ((supportFragmentManager.findFragmentById(R.id.navHostFragment)!!
                         .childFragmentManager.fragments[0] as DictionaryFragment).onBackPressed()
                 ) doubleBackPressToExit()
+            // TODO() -> onBackPressed for test questions and results fragments
             R.id.settingsFragment ->
                 findNavController(R.id.navHostFragment).navigateUp()
             else -> doubleBackPressToExit()

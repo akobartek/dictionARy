@@ -21,4 +21,10 @@ interface WordsDao {
 
     @Delete
     suspend fun deleteWord(word: Word)
+
+    @Query("SELECT COUNT(*) FROM words_table WHERE language = :language")
+    suspend fun getCountOfWords(language: String): Int
+
+    @Query("SELECT COUNT(*) FROM words_table WHERE status = :status AND language = :language")
+    suspend fun getCountByStatus(language: String, status: Int): Int
 }
