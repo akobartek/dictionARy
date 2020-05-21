@@ -8,4 +8,6 @@
     <color name="colorBackground">#28292e</color>
     <color name="colorListItemBackground">#232428</color>
     <color name="colorAnswer">#AAAAAA</color>
+    <color name="colorCorrectAnswer">#004D00</color>
+    <color name="colorWrongAnswer">#4D0000</color>
 </resources>

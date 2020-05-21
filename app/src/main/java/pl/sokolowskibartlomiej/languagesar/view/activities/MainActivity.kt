@@ -87,6 +87,9 @@ class MainActivity : AppCompatActivity() {
             R.id.testQuestionsFragment ->
                 (supportFragmentManager.findFragmentById(R.id.navHostFragment)!!
                     .childFragmentManager.fragments[0] as TestQuestionsFragment).onBackPressed()
+            R.id.testResultsFragment ->
+                (supportFragmentManager.findFragmentById(R.id.navHostFragment)!!
+                    .childFragmentManager.fragments[0] as TestResultsFragment).onBackPressed()
             R.id.settingsFragment ->
                 findNavController(R.id.navHostFragment).navigateUp()
             else -> doubleBackPressToExit()

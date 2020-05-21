@@ -15,8 +15,7 @@ import kotlin.collections.ArrayList
 
 class DictionaryRecyclerAdapter(
     val emptyView: View, val showPopup: (Word, View) -> Unit, val speakWord: (Word, View) -> Unit
-) :
-    RecyclerView.Adapter<DictionaryRecyclerAdapter.WordViewHolder>(), Filterable {
+) : RecyclerView.Adapter<DictionaryRecyclerAdapter.WordViewHolder>(), Filterable {
 
     private var mWords = listOf<Word>()
     private var mWordsFiltered = listOf<Word>()

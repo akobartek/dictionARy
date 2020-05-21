@@ -201,7 +201,6 @@ class DictionaryFragment : Fragment() {
             true
         }
         popupMenu.show()
-
     }
 
     private fun inflateToolbarMenu(toolbar: Toolbar) {

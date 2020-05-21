@@ -15,6 +15,7 @@ import android.os.Build
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import pl.sokolowskibartlomiej.languagesar.R
 import java.util.*
 import kotlin.math.min
@@ -63,6 +64,8 @@ fun Context.showBasicAlertDialog(titleId: Int?, messageId: Int) {
 
 fun Context.showShortToast(messageId: Int) =
     Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
+
+fun Context.getColorResource(colorId: Int) = ContextCompat.getColor(this, colorId)
 // endregion CONTEXT
 
 // region ACTIVITY

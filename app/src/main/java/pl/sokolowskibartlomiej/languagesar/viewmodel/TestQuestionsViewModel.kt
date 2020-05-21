@@ -37,9 +37,11 @@ class TestQuestionsViewModel(val app: Application) : AndroidViewModel(app) {
                     .take(4).shuffled().toTypedArray()
                 questions.add(
                     TestQuestion(
+                        questionWord.id!!,
                         word[0],
                         word[if (PreferencesManager.getUserLanguage() == "pl") 1 else 2],
-                        answers
+                        answers,
+                        questionWord.status
                     )
                 )
             }

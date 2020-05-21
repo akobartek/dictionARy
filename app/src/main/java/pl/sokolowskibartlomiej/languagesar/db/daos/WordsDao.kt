@@ -22,6 +22,9 @@ interface WordsDao {
     @Update
     suspend fun updateWord(word: Word)
 
+    @Query("UPDATE words_table SET status = :status WHERE id = :id")
+    suspend fun updateWordById(id: Int, status: Int)
+
     @Delete
     suspend fun deleteWord(word: Word)
 

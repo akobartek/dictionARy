@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_test_questions.view.*
 import pl.sokolowskibartlomiej.languagesar.R
 import pl.sokolowskibartlomiej.languagesar.utils.animateBackgroundTintChange
 import pl.sokolowskibartlomiej.languagesar.utils.getChildViewByName
+import pl.sokolowskibartlomiej.languagesar.utils.getColorResource
 import pl.sokolowskibartlomiej.languagesar.viewmodel.TestQuestionsViewModel
 
 class TestQuestionsFragment : Fragment() {
@@ -107,11 +108,11 @@ class TestQuestionsFragment : Fragment() {
 
     private fun swapQuestionLayout(width: Float) {
         val anim = ObjectAnimator.ofFloat(view?.questionLayout, "x", 0f, width)
-            .setDuration(200)
+            .setDuration(150)
         anim.doOnEnd {
             setQuestionValues()
             ObjectAnimator.ofFloat(view?.questionLayout, "x", -width, 0f)
-                .setDuration(200)
+                .setDuration(150)
                 .start()
         }
         anim.start()
@@ -136,8 +137,8 @@ class TestQuestionsFragment : Fragment() {
             .show()
 
     private val onAnswerClickListener = View.OnClickListener {
-        val colorNormal = ContextCompat.getColor(requireContext(), R.color.colorAnswer)
-        val colorSelected = ContextCompat.getColor(requireContext(), R.color.colorAccent)
+        val colorNormal = requireContext().getColorResource(R.color.colorAnswer)
+        val colorSelected = requireContext().getColorResource(R.color.colorAccent)
         val tag = it.tag.toString().toInt()
         val currentQuestion = mViewModel.testQuestions[mViewModel.currentQuestion]
         when (currentQuestion.selectedAnswer) {

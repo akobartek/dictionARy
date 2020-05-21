@@ -96,4 +96,8 @@
     <string name="finish_test_dialog_msg2">Are you sure you want to finish the test and see your results? You left some questions without answer!</string>
     <string name="interrupt">Interrupt</string>
     <string name="interrupt_test_dialog_msg">Are you sure you want to interrupt the test? All progress will be lost!</string>
+    <string name="results">Results</string>
+    <string name="your_results">Your result:</string>
+    <string name="your_answer">Your answer: %s</string>
+    <string name="no_answer_given">No answer given</string>
 </resources>

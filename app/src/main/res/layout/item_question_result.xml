@@ -2,10 +2,11 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/answerLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/colorListItemBackground"
-    app:cardCornerRadius="3dp"
+    app:cardBackgroundColor="@color/colorCorrectAnswer"
+    app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
 
@@ -16,7 +17,7 @@
         android:layout_marginBottom="4dp">
 
         <ImageButton
-            android:id="@+id/wordOptionsBtn"
+            android:id="@+id/answerOptionsBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
@@ -28,49 +29,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/wordSoundBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_word_sound"
-            android:padding="4dp"
-            android:src="@drawable/anim_sound_to_pause"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/wordOptionsBtn"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/wordTV"
+            android:id="@+id/correctAnswerTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="sans-serif-condensed-light"
             android:gravity="center_vertical"
             android:paddingBottom="4dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/colorText"
-            app:layout_constraintEnd_toStartOf="@+id/wordSoundBtn"
+            app:layout_constraintEnd_toStartOf="@+id/answerOptionsBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@tools:sample/lorem" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/translationTV"
+            android:id="@+id/incorrectAnswerTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
-            android:alpha="0.5"
-            android:fontFamily="sans-serif-light"
+            android:alpha="0.7"
+            android:fontFamily="sans-serif-condensed-light"
             android:gravity="center_vertical"
             android:paddingBottom="4dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:textColor="@color/colorText"
-            app:layout_constraintEnd_toStartOf="@+id/wordSoundBtn"
+            app:layout_constraintEnd_toStartOf="@+id/answerOptionsBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wordTV"
+            app:layout_constraintTop_toBottomOf="@+id/correctAnswerTV"
             tools:text="@tools:sample/lorem" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -28,6 +28,9 @@ class WordsRepository(application: Application) {
     suspend fun updateWord(word: Word) = mWordsDao.updateWord(word)
 
     @WorkerThread
+    suspend fun updateWordById(id: Int, status: Int) = mWordsDao.updateWordById(id, status)
+
+    @WorkerThread
     suspend fun deleteWord(word: Word) = mWordsDao.deleteWord(word)
 
     @WorkerThread
