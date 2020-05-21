@@ -22,7 +22,7 @@
         android:layout_marginBottom="24dp"
         android:fontFamily="sans-serif"
         android:padding="12dp"
-        android:text="@string/detect_object"
+        android:text="@string/detect_objects"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         android:textColor="@color/colorBackground"
         app:backgroundTint="@color/colorAccent"

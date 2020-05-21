@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- BASIC STRINGS -->
+    <string name="app_name">Słówka AR</string>
+    <string name="ok">OK</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="try_again">Spróbuj</string>
+    <string name="send">Wyślij</string>
+    <string name="save">Zapisz</string>
+    <string name="cancel">Anuluj</string>
+    <string name="loading">Ładowanie…</string>
+    <string name="press_to_exit">Naciśnij ponownie aby wyjść!</string>
+    <string name="no_internet_title">Brak połączenia</string>
+    <string name="no_internet_reconnect_message">ystąpił błąd połączenia z siecią, chcesz spróbować ponownie?</string>
+    <string name="permission_error_title">Permissions not granted!</string>
+
+    <!-- SETTINGS STRINGS -->
+    <string name="settings">Ustawienia</string>
+    <string name="night_mode_title">Tryb nocny</string>
+    <string name="night_mode_summary">Włącz tryb nocny w aplikacji</string>
+    <string name="selected_language_title">Wybrany język</string>
+
+    <!-- PHOTOS OBJECT DETECTION -->
+    <string name="ar">AR</string>
+    <string name="detect_objects">Wykryj obiekty</string>
+    <string name="cd_open_translation_btn">Wyniki tłumaczenia</string>
+    <string name="cd_latest_photo">Miniatura ostatniego zdjęcia</string>
+    <string name="permission_error_msg">Jeśli chcesz skorzystać z tej funkcji, musisz zezwolić aplikacji na robienie zdjęć!</string>
+    <string name="allow">Zezwól</string>
+    <string name="object_detection_error">Wystąpił błąd podczas wykrywania obiektu, spróbuj ponownie za chwilę!</string>
+    <string name="image_capture_error">Podczas przechwytywania obrazu wystąpił błąd, spróbuj ponownie za chwilę!</string>
+    <string name="detected_object">Wykryty obiekt</string>
+    <string name="cd_collapse_bottom_sheet">Zakmnij okno</string>
+    <string name="cd_close_activity_btn">Zamknij aktywność</string>
+    <string name="cd_flash_btn">Przełącz lampę błyskową aparatu</string>
+    <string name="cd_source_flag">Flaga języka źródłowego</string>
+    <string name="cd_target_flag">Flaga języka docelowego</string>
+    <string name="cd_save_translation">Zapisz nowe słowo</string>
+    <string name="word_saved">Słowo zapisane w bazie danych!</string>
+    <string name="other_detected_objects">Inne wykryte obiekty</string>
+    <string name="apply">Zastosuj</string>
+
+    <!-- DICTIONARY STRINGS -->
+    <string name="dictionary">Słownik</string>
+    <string name="search">Szukaj</string>
+    <string name="filters">Filtry</string>
+    <string name="status">Status</string>
+    <string name="current_filters">Obecne filtry: %s</string>
+    <string name="saved">Zapisane</string>
+    <string name="known">Znane</string>
+    <string name="other">Inne</string>
+    <string name="none">Żadne</string>
+    <string name="all">Wszystkie</string>
+    <string name="cd_save_filters">Zapisz filtry</string>
+    <string name="filters_saved">Zapisano filtry!</string>
+    <string name="word_search">Wyszukaj słowo lub tłumaczenie</string>
+    <string name="select_language_dialog_title">Wybierz język, którego chcesz się uczyć:</string>
+    <string name="language_es">Hiszpański</string>
+    <string name="language_fr">Francuski</string>
+    <string name="language_it">Włoski</string>
+    <string name="language_en">Angielski</string>
+    <string name="empty_dictionary">Nie ma słów spełniających Twoje kryteria!</string>
+    <string name="cd_word_options">Operacje, które możesz wykonać z tym słowem</string>
+    <string name="cd_word_sound">Odtwórz/wstrzymaj nagranie tego słowa</string>
+    <string name="add_word">Dodaj nowe słowo</string>
+    <string name="word">Słowo</string>
+    <string name="word_empty_error">Słowo nie może być puste!</string>
+    <string name="translation">Tłumaczenie</string>
+    <string name="translation_empty_error">Tłumaczenie nie może być puste!</string>
+    <string name="add_to_saved_words">Dodaj do listy zapisanych słów</string>
+    <string name="save_word">Dodaj do zapisanych słów</string>
+    <string name="save_word_remove">Usuń z zapisanych słów</string>
+    <string name="known_word">Dodaj do znanych słów</string>
+    <string name="known_word_remove">Usuń ze znanych słów</string>
+    <string name="delete_word">Usuń słowo</string>
+    <string name="database_updated">Baza danych pomyślnie zaktualizowana!</string>
+
+    <!-- TEST STRINGS -->
+    <string name="tests">Testy</string>
+    <string name="test_word_status_title">Które słowa\nchcesz przetestować??</string>
+    <string name="test_number_of_words_title">Ile słów\nchcesz przetestować?</string>
+    <string name="start_test">Zacznij test</string>
+    <string name="number_of_words_error">Nie można rozpocząć testu, gdy liczba słów do przetestowania wynosi 0!</string>
+    <string name="no_words_title">Pusta baza danych</string>
+    <string name="no_words_msg">W bazie danych nie ma słów! Jeśli chcesz sprawdzić swoją wiedzę, najpierw dodaj słowa!</string>
+    <string name="no_saved_words">W bazie danych nie ma zapisanych słów!</string>
+    <string name="no_known_words">W bazie danych nie ma znanych słów!</string>
+    <string name="question_x">Pytanie %d</string>
+    <string name="next">Następne</string>
+    <string name="previous">Poprzednie</string>
+    <string name="finish">Zakończ</string>
+    <string name="finish_test_dialog_title">Zakończenie testu</string>
+    <string name="finish_test_dialog_msg1">Czy na pewno chcesz zakończyć test i zobaczyć wyniki?</string>
+    <string name="finish_test_dialog_msg2">Czy na pewno chcesz zakończyć test i zobaczyć wyniki? Zostawiono kilka pytań bez odpowiedzi!</string>
+    <string name="interrupt">Przerwij</string>
+    <string name="interrupt_test_dialog_msg">Czy na pewno chcesz przerwać test? Cały postęp zostanie utracony!</string>
+    <string name="results">Wyniki</string>
+    <string name="your_results">Twój wynik:</string>
+    <string name="your_answer">Twoja odpowiedź: %s</string>
+    <string name="no_answer_given">Nie udzielono odpowiedzi</string>
+</resources>

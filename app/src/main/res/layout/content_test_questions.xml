@@ -68,11 +68,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/nextQuestionBtn"
-        android:layout_width="112dp"
+        android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:padding="16dp"
+        android:padding="12dp"
         android:text="@string/next"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         android:textColor="@color/colorBackground"
@@ -85,11 +85,11 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/previousQuestionBtn"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="112dp"
+        android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:padding="16dp"
+        android:padding="12dp"
         android:text="@string/previous"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         android:textColor="@color/colorAccent"

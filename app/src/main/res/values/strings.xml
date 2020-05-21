@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- BASIC STRINGS -->
     <string name="app_name">Languages AR</string>
@@ -24,7 +25,7 @@
 
     <!-- PHOTOS OBJECT DETECTION -->
     <string name="ar">AR</string>
-    <string name="detect_object">Detect object</string>
+    <string name="detect_objects">Detect objects</string>
     <string name="cd_open_translation_btn">Results of translation</string>
     <string name="cd_latest_photo">Latest photo thumbnail</string>
     <string name="permission_error_msg">If you want to use this feature, you have to allow app to make photos!</string>
