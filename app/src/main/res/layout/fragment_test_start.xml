@@ -95,6 +95,9 @@
         app:layout_constraintEnd_toEndOf="@+id/testNumberOfWordsTitle"
         app:layout_constraintStart_toStartOf="@+id/testNumberOfWordsTitle"
         app:layout_constraintTop_toBottomOf="@+id/testNumberOfWordsTitle"
+        app:thumbColor="@color/colorAccent"
+        app:trackColorActive="@color/colorAccent"
+        app:trackColorInactive="@color/colorAnswer"
         tools:value="16" />
 
     <com.google.android.material.button.MaterialButton
