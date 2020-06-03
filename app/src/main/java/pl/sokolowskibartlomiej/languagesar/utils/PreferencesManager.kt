@@ -28,6 +28,17 @@ object PreferencesManager {
 
     fun getSelectedLanguage() = sharedPref.getString(SELECTED_LANGUAGE, "")!!
 
+    fun getSelectedLanguageCountryCode() =
+        getSelectedLanguage().let { if (it != "en") it else "us" }
+
+    fun getSelectedLanguageLocaleCode() = when (getSelectedLanguage()) {
+        "en" -> "en_US"
+        "es" -> "es_ES"
+        "fr" -> "fr_FR"
+        "it" -> "it_IT"
+        else -> "pl_PL"
+    }
+
     fun setSelectedLanguage(languageCode: String) {
         sharedPref.edit()
             .putString(SELECTED_LANGUAGE, languageCode)

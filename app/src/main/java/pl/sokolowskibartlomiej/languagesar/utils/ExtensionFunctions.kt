@@ -9,10 +9,14 @@ import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.media.Image
 import android.net.ConnectivityManager
 import android.os.Build
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.view.View
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -136,6 +140,32 @@ fun View.animateBackgroundTintChange(startColor: Int, endColor: Int) {
     animator.start()
 }
 // endregion VIEW
+
+// region IMAGEBUTTON
+fun ImageButton.speakWord(word: String, textToSpeech: TextToSpeech) {
+    var drawable = context.getDrawable(
+        if (textToSpeech.isSpeaking) R.drawable.anim_pause_to_sound else R.drawable.anim_sound_to_pause
+    )
+    setImageDrawable(drawable)
+    (drawable as AnimatedVectorDrawable).start()
+
+    textToSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+        override fun onDone(utteranceId: String?) {
+            drawable = context.getDrawable(R.drawable.anim_pause_to_sound)
+            setImageDrawable(drawable)
+            (drawable as AnimatedVectorDrawable).start()
+        }
+
+        override fun onError(utteranceId: String?) {}
+        override fun onStart(utteranceId: String?) {}
+    })
+
+    if (textToSpeech.isSpeaking) textToSpeech.stop()
+    else textToSpeech.speak(
+        word, TextToSpeech.QUEUE_FLUSH, null, TextToSpeech.ACTION_TTS_QUEUE_PROCESSING_COMPLETED
+    )
+}
+// endregion IMAGEBUTTON
 
 // region IMAGE
 fun Image.toBitmap(rotation: Float): Bitmap {

@@ -3,10 +3,8 @@ package pl.sokolowskibartlomiej.languagesar.view.fragments
 import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
-import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +37,7 @@ import pl.sokolowskibartlomiej.languagesar.db.entities.Word.Companion.WORD_STATU
 import pl.sokolowskibartlomiej.languagesar.db.entities.Word.Companion.WORD_STATUS_SAVED
 import pl.sokolowskibartlomiej.languagesar.utils.PreferencesManager
 import pl.sokolowskibartlomiej.languagesar.utils.showShortToast
+import pl.sokolowskibartlomiej.languagesar.utils.speakWord
 import pl.sokolowskibartlomiej.languagesar.view.adapters.DictionaryRecyclerAdapter
 import pl.sokolowskibartlomiej.languagesar.view.adapters.LanguageRecyclerAdapter
 import pl.sokolowskibartlomiej.languagesar.viewmodel.DictionaryViewModel
@@ -99,7 +98,7 @@ class DictionaryFragment : Fragment() {
         super.onResume()
         mTextToSpeech = TextToSpeech(context, TextToSpeech.OnInitListener { status ->
             if (status == TextToSpeech.SUCCESS) {
-                mTextToSpeech.language = Locale(PreferencesManager.getSelectedLanguage())
+                mTextToSpeech.language = Locale(PreferencesManager.getSelectedLanguageLocaleCode())
                 mTextToSpeech.setSpeechRate(0.9f)
             } else if (BuildConfig.DEBUG) Log.e("TextToSpeech", "Initialization failed!")
         })
@@ -144,30 +143,8 @@ class DictionaryFragment : Fragment() {
         })
     }
 
-    private fun speakWord(word: Word, button: View) {
-        var drawable = requireContext().getDrawable(
-            if (mTextToSpeech.isSpeaking) R.drawable.anim_pause_to_sound else R.drawable.anim_sound_to_pause
-        )
-        (button as ImageButton).setImageDrawable(drawable)
-        (drawable as AnimatedVectorDrawable).start()
-
-        mTextToSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
-            override fun onDone(utteranceId: String?) {
-                drawable = requireContext().getDrawable(R.drawable.anim_pause_to_sound)
-                button.setImageDrawable(drawable)
-                (drawable as AnimatedVectorDrawable).start()
-            }
-
-            override fun onError(utteranceId: String?) {}
-            override fun onStart(utteranceId: String?) {}
-        })
-
-        if (mTextToSpeech.isSpeaking) mTextToSpeech.stop()
-        else mTextToSpeech.speak(
-            word.word.split(" - ")[0], TextToSpeech.QUEUE_FLUSH,
-            null, TextToSpeech.ACTION_TTS_QUEUE_PROCESSING_COMPLETED
-        )
-    }
+    private fun speakWord(word: Word, button: View) =
+        (button as ImageButton).speakWord(word.word.split(" - ")[0], mTextToSpeech)
 
     private fun showWordPopupMenu(word: Word, view: View) {
         val popupMenu = PopupMenu(requireContext(), view)

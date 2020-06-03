@@ -6,10 +6,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.squareup.moshi.JsonEncodingException
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import pl.sokolowskibartlomiej.languagesar.BuildConfig
 import pl.sokolowskibartlomiej.languagesar.apicalls.RetrofitClient
@@ -38,13 +35,13 @@ class PhotoViewModel(val app: Application) : AndroidViewModel(app) {
                 val userTranslation =
                     if (userLangCode.contains("en")) text
                     else mTranslateRepository.translateText(text, "en", userLangCode)
-                val targetTranslation =
-                    mTranslateRepository.translateText(
-                        text, "en", PreferencesManager.getSelectedLanguage()
-                    )
+                val targetTranslation = PreferencesManager.getSelectedLanguage().let {
+                    if (it != "en") mTranslateRepository.translateText(text, "en", it)
+                    else text
+                }
                 selectedLabel = 0
                 translation.postValue(Pair(userTranslation, targetTranslation))
-            } catch (exc: JsonEncodingException) {
+            } catch (exc: Throwable) {
                 if (BuildConfig.DEBUG) Log.e("fetchTranslation", exc.toString())
                 translation.postValue(null)
             }

@@ -237,7 +237,7 @@ class PhotoActivity : AppCompatActivity() {
             try {
                 mCamera =
                     cameraProvider.bindToLifecycle(this, cameraSelector, mPreview, mImageCapture)
-                mPreview?.setSurfaceProvider(viewFinder.createSurfaceProvider(mCamera?.cameraInfo))
+                mPreview?.setSurfaceProvider(viewFinder.createSurfaceProvider())
             } catch (exc: Exception) {
                 if (BuildConfig.DEBUG) Log.e("MainActivity", "Use case binding failed", exc)
             }

@@ -27,8 +27,8 @@
         android:textColor="@color/colorMenuIcons"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/guidePeekHeight"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hearTranslationBtn"
+        app:layout_constraintStart_toEndOf="@+id/collapseSheetBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -56,6 +56,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_save" />
+
+    <ImageButton
+        android:id="@+id/hearTranslationBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/cd_word_sound"
+        android:scaleType="center"
+        app:layout_constraintBottom_toTopOf="@id/guidePeekHeight"
+        app:layout_constraintEnd_toStartOf="@+id/saveTranslationBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/anim_sound_to_pause" />
 
     <ImageView
         android:id="@+id/sourceFlag"
