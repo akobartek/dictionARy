@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- BASIC STRINGS -->
-    <string name="app_name">Languages AR</string>
+    <string name="app_name">dictionARy</string>
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
